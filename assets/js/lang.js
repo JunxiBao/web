@@ -321,6 +321,14 @@
       en: 'Our school\'s education group held a charity competition called the "2050 Future Changemakers Competition." Our "Purpura Elf" project participated and won the national championship with a prize of 4000 yuan. This article documents our journey from the preliminary rounds through the school finals to the national finals in Shanghai, including the challenges, improvements, and ultimate victory.',
       zh: '我们学校的教育集团举办了一场名为"2050未来变革者竞赛"的公益赛事。我们的"紫癜精灵"项目参赛并荣获全国冠军，奖金4000元。这篇文章记录了我们从预赛、校内决赛到上海全国总决赛的历程，包括面临的挑战、改进与最终的胜利。',
     },
+    "article.ap-exams.title": {
+      en: "Thoughts on AP Exams",
+      zh: "AP考试的那些事",
+    },
+    "article.ap-exams.desc": {
+      en: "Taking six AP exams in one year — from the anxiety-inducing Physics C mock exams I never cracked a 5 on, to Statistics surprises and a surprisingly smooth Physics test day. A candid look at the most stressful academic year of my high school life.",
+      zh: "一年备考六门 AP——从物理模考屡战屡败的煎熬，到统计出乎意料的难题，再到正式考试时物理意外简单的释然。记录我高中最有压力的一年。",
+    },
 
     // ── index.html ────────────────────────────────────────────────────────────
     "index.title": { en: "JunxiBao's Blog", zh: "鲍俊希的博客" },
