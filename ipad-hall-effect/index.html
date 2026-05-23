@@ -79,40 +79,49 @@
                 <!-- Tab 2: Hand Rules -->
                 <div id="tab-rules" class="tab-content">
                     <div class="science-card">
-                        <div class="science-badge">Lorentz Force & Left-Hand Rule</div>
-                        <h4>✋ Fleming's Left-Hand Rule (Deflection of Electrons)</h4>
-                        <p>In our micro-level simulation, electrons flowing through the semiconductor chip are deflected downwards. To determine the direction of the magnetic force acting on moving charge carriers, we use <strong>Fleming's Left-Hand Rule</strong>:</p>
+                        <div class="science-badge">Lorentz Force & Right-Hand Rule</div>
+                        <h4>✋ Right-Hand Rule (Deflection of Electrons)</h4>
+                        <p>In our micro-level simulation, electrons flowing through the semiconductor chip are deflected downwards. To determine the direction of the magnetic force acting on moving charge carriers, we use the <strong>Right-Hand Rule (Vector Cross Product)</strong>:</p>
+                        
+                        <div class="formula-box" style="margin: 1rem 0; font-size: 1.1rem; padding: 0.75rem;">
+                            <strong>F</strong> = q &middot; (<strong>v</strong> &times; <strong>B</strong>)
+                        </div>
+
                         <ol class="step-list">
                             <li>
                                 <span class="step-num">1</span>
-                                <span class="step-text"><strong>Position your Left Hand</strong>: Place your left hand such that the magnetic field lines <strong>B</strong> point into your palm (since the magnetic field B points into the screen in the -Z direction, your palm should face forward).</span>
+                                <span class="step-text"><strong>Velocity Vector (v)</strong>: Point the four fingers of your right hand straight in the direction of the electron's actual movement. In our chip, electrons flow to the <strong>left</strong>, so point your fingers to the left.</span>
                             </li>
                             <li>
                                 <span class="step-num">2</span>
-                                <span class="step-text"><strong>Point your Four Fingers</strong>: Point your four fingers in the direction of the conventional current. Since <strong>negatively charged electrons</strong> are flowing to the left in the chip, the equivalent conventional current flows in the opposite direction, which is to the <strong>right</strong>. Thus, point your four fingers to the right.</span>
+                                <span class="step-text"><strong>Curl to Magnetic Field (B)</strong>: Curl your fingers 90 degrees into the direction of the magnetic field <strong>B</strong>. Since B points <strong>into the screen</strong>, curl your fingers forward into the screen.</span>
                             </li>
                             <li>
                                 <span class="step-num">3</span>
-                                <span class="step-text"><strong>Find the Force with your Thumb</strong>: Extend your thumb perpendicular to your four fingers. Your thumb now points in the direction of the Lorentz Force <strong>F</strong> acting on the electrons. You will see that your thumb points <strong>downwards</strong>.</span>
+                                <span class="step-text"><strong>Cross Product Direction (v &times; B)</strong>: Extend your thumb perpendicular to your fingers. Your thumb points straight <strong>upwards</strong>. This is the direction of the cross product <strong>v &times; B</strong>.</span>
+                            </li>
+                            <li>
+                                <span class="step-num">4</span>
+                                <span class="step-text"><strong>Account for Negative Charge (q)</strong>: Since electrons are negatively charged (q = -e), the force <strong>F</strong> is in the <strong>opposite direction</strong> of the cross product <strong>v &times; B</strong>. Thus, reverse the upward direction: the resulting Lorentz Force points <strong>downwards</strong>!</span>
                             </li>
                         </ol>
 
-                        <!-- Diagram for Left Hand Rule -->
+                        <!-- Diagram for Right Hand Rule -->
                         <div class="science-img-container">
-                            <img src="left-hand-rule.png" alt="Fleming's Left Hand Rule" class="science-img" style="max-height: 180px;">
-                            <div class="img-caption">Figure 2: Fleming's Left-Hand Rule. The index finger points in the direction of the magnetic Field B, the middle finger points in the direction of the conventional Current I, and the thumb indicates the direction of the deflection Force F.</div>
+                            <img src="right-hand-rule.png" alt="Right-Hand Rule for Lorentz Force" class="science-img" style="max-height: 180px;">
+                            <div class="img-caption">Figure 2: Right-Hand Rule (Vector Cross Product). The index finger points in the direction of velocity <strong>v</strong>, the middle finger points along magnetic Field <strong>B</strong>, and the thumb indicates the cross product direction <strong>v &times; B</strong> (upwards). For a negative electron, the resulting Lorentz Force <strong>F</strong> points opposite to the thumb (downwards).</div>
                         </div>
 
-                        <p><strong>Physics Conclusion:</strong> The Lorentz Force pushes the flowing electrons toward the <strong>bottom edge (negatively charged)</strong>, leaving a deficit of electrons—and thus a <strong>positive charge—on the top edge</strong>. This establishes the "top-positive, bottom-negative" potential difference, generating the Hall Voltage!</p>
+                        <p><strong>Physics Conclusion:</strong> The Right-Hand Rule correctly predicts that the Lorentz Force pushes the flowing electrons toward the <strong>bottom edge (negatively charged)</strong>, leaving a deficit of electrons—and thus a <strong>positive charge—on the top edge</strong>. This establishes the potential difference that generates the Hall Voltage!</p>
                     </div>
  
                     <div class="science-card warning">
                         <div class="science-badge">Comparison</div>
                         <h4>⚠️ Physics Reminder: Distinguishing Hand Rules</h4>
-                        <p>In electromagnetism, Left-Hand and Right-Hand rules are easily confused. Here is a quick guide to distinguish them:</p>
+                        <p>In electromagnetism, different hand rules are used for different phenomena. Here is a quick guide to distinguish them:</p>
                         <ul>
-                            <li><strong>Left-Hand Rule (Force / Deflection)</strong>: Used to determine the magnetic force acting on a current-carrying conductor or moving charges in a magnetic field. <em>"Left hand for Force."</em></li>
-                            <li><strong>Right-Hand Rule (Induced Current / Generator)</strong>: Used to determine the direction of induced current when a conductor cuts through magnetic field lines. <em>"Right hand for Electricity."</em></li>
+                            <li><strong>Right-Hand Rule (Lorentz Force)</strong>: Used to determine the magnetic force acting on moving charges using the vector cross product <strong>F</strong> = q(<strong>v</strong> &times; <strong>B</strong>). <em>Remember to reverse the direction for negative charges!</em></li>
+                            <li><strong>Left-Hand Rule (Fleming's Force Rule)</strong>: An alternative rule specifically for current-carrying wires, where the thumb points in the direction of the force.</li>
                             <li><strong>Right-Hand Grip Rule (Ampere's Rule)</strong>: Point your right thumb in the direction of the current; your curled fingers show the direction of the <strong>encircling magnetic field</strong>.</li>
                         </ul>
                     </div>
