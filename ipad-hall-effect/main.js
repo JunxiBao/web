@@ -10,6 +10,11 @@ scene.background = new THREE.Color(0xffffff); // Clean white background
 const macroCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
 macroCamera.position.set(-5, 18, 22);
 
+// PIP static camera for macroscopic status monitor
+const pipCamera = new THREE.PerspectiveCamera(45, 1, 0.1, 200);
+pipCamera.position.set(-5, 15, 18);
+pipCamera.lookAt(new THREE.Vector3(-5, 0, 0));
+
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -18,6 +23,14 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setScissorTest(true);
 renderer.localClippingEnabled = true;  // needed for per-material clipping planes
 container.appendChild(renderer.domElement);
+
+// PIP Renderer — dedicated small canvas for rounded-corner macroscopic view
+const pipCanvasEl = document.getElementById('pip-canvas');
+const pipRenderer = new THREE.WebGLRenderer({ canvas: pipCanvasEl, antialias: true, alpha: false });
+pipRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+pipRenderer.shadowMap.enabled = true;
+pipRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+pipRenderer.localClippingEnabled = true;
 
 // Independent Controls
 // Single OrbitControls over the entire canvas
@@ -589,6 +602,8 @@ const magStatusEl = document.getElementById('magnetic-field-status');
 const voltageEl = document.getElementById('sensor-voltage');
 const screenStateEl = document.getElementById('screen-state');
 const explanationEl = document.getElementById('explanation-text');
+const pipContainer = document.getElementById('pip-container');
+const pipScreenBadge = document.getElementById('pip-screen-badge');
 
 function updateUI(angleDeg) {
     const angleRad = THREE.MathUtils.degToRad(angleDeg);
@@ -641,6 +656,17 @@ function updateUI(angleDeg) {
         screenStateEl.textContent = 'Awake'; screenStateEl.className = 'data-value success';
         explanationEl.innerHTML = '<strong>Cover Open:</strong> The magnetic field is absent. Electrons flow straight through the sensor with no deflection — the Hall Voltage drops to near 0V, signaling the processor to keep the screen awake.';
         // sensorRing removed
+    }
+
+    // Dynamic PIP screen status update
+    if (pipScreenBadge) {
+        if (!isScreenOn) {
+            pipScreenBadge.textContent = 'Sleep';
+            pipScreenBadge.className = 'pip-status-badge warning';
+        } else {
+            pipScreenBadge.textContent = 'Awake';
+            pipScreenBadge.className = 'pip-status-badge success';
+        }
     }
 }
 
@@ -727,12 +753,35 @@ function animate() {
     
     updateScreenTexture();
     
-    // Single full-screen render — micro elements are embedded inside the iPad
+    // Render main viewport
     const width = window.innerWidth;
     const height = window.innerHeight;
     renderer.setViewport(0, 0, width, height);
     renderer.setScissor(0, 0, width, height);
     renderer.render(scene, macroCamera);
+
+    // PIP macroscopic overview (only when focused on sensor)
+    if (focusedOnSensor) {
+        if (pipContainer) {
+            pipContainer.classList.add('active');
+            const pipBody = pipContainer.querySelector('.pip-body');
+            if (pipBody) {
+                const rect = pipBody.getBoundingClientRect();
+                const pipW = Math.floor(rect.width);
+                const pipH = Math.floor(rect.height);
+                if (pipW > 0 && pipH > 0) {
+                    pipRenderer.setSize(pipW, pipH, false);
+                    pipCamera.aspect = pipW / pipH;
+                    pipCamera.updateProjectionMatrix();
+                    pipRenderer.render(scene, pipCamera);
+                }
+            }
+        }
+    } else {
+        if (pipContainer) {
+            pipContainer.classList.remove('active');
+        }
+    }
     
     // Camera fly-to animation
     if (cameraFly.active) {

@@ -24,7 +24,18 @@
 <body>
     <div id="canvas-container"></div>
 
-    <!-- Top-Right Info Button -->
+    <!-- Macroscopic PIP Panel (Only active in micro focus mode) -->
+    <div id="pip-container" class="pip-panel">
+        <div class="pip-header">
+            <span class="pip-title"><span style="font-size: 0.85rem; margin-right: 4px;"></span>iPad Status</span>
+            <span id="pip-screen-badge" class="pip-status-badge success">Awake</span>
+        </div>
+        <div class="pip-body">
+            <canvas id="pip-canvas"></canvas>
+        </div>
+    </div>
+
+    <!-- Top-Right Info Button (now positioned in top-left via CSS) -->
     <div class="info-btn-container">
         <button id="info-trigger-btn" class="info-trigger-btn">?</button>
     </div>
@@ -90,15 +101,15 @@
                         <ol class="step-list">
                             <li>
                                 <span class="step-num">1</span>
-                                <span class="step-text"><strong>Velocity Vector (v)</strong>: Point the four fingers of your right hand straight in the direction of the electron's actual movement. In our chip, electrons flow to the <strong>left</strong>, so point your fingers to the left.</span>
+                                <span class="step-text"><strong>Velocity Vector (v)</strong>: Point the index finger of your right hand in the direction of the electron's movement. In our chip, electrons flow to the <strong>left</strong>, so point your index finger to the left.</span>
                             </li>
                             <li>
                                 <span class="step-num">2</span>
-                                <span class="step-text"><strong>Curl to Magnetic Field (B)</strong>: Curl your fingers 90 degrees into the direction of the magnetic field <strong>B</strong>. Since B points <strong>into the screen</strong>, curl your fingers forward into the screen.</span>
+                                <span class="step-text"><strong>Magnetic Field (B)</strong>: Point your middle finger perpendicular to your hand in the direction of the magnetic field <strong>B</strong>. Since B points <strong>out of the screen (towards you)</strong>, point your middle finger straight out towards you.</span>
                             </li>
                             <li>
                                 <span class="step-num">3</span>
-                                <span class="step-text"><strong>Cross Product Direction (v &times; B)</strong>: Extend your thumb perpendicular to your fingers. Your thumb points straight <strong>upwards</strong>. This is the direction of the cross product <strong>v &times; B</strong>.</span>
+                                <span class="step-text"><strong>Cross Product Direction (v &times; B)</strong>: Extend your thumb perpendicular to both fingers. Your thumb points straight <strong>upwards</strong>. This is the direction of the cross product <strong>v &times; B</strong>.</span>
                             </li>
                             <li>
                                 <span class="step-num">4</span>
@@ -109,7 +120,7 @@
                         <!-- Diagram for Right Hand Rule -->
                         <div class="science-img-container">
                             <img src="right-hand-rule.png" alt="Right-Hand Rule for Lorentz Force" class="science-img" style="max-height: 180px;">
-                            <div class="img-caption">Figure 2: Right-Hand Rule (Vector Cross Product). The index finger points in the direction of velocity <strong>v</strong>, the middle finger points along magnetic Field <strong>B</strong>, and the thumb indicates the cross product direction <strong>v &times; B</strong> (upwards). For a negative electron, the resulting Lorentz Force <strong>F</strong> points opposite to the thumb (downwards).</div>
+                            <div class="img-caption">Figure 2: Right-Hand Rule (Vector Cross Product). The index finger points in the direction of velocity <strong>v</strong> (left), the middle finger points along magnetic Field <strong>B</strong> (out of screen towards you), and the thumb indicates the cross product direction <strong>v &times; B</strong> (upwards). For a negative electron (q = -e), the resulting Lorentz Force <strong>F</strong> points opposite to the thumb (downwards).</div>
                         </div>
 
                         <p><strong>Physics Conclusion:</strong> The Right-Hand Rule correctly predicts that the Lorentz Force pushes the flowing electrons toward the <strong>bottom edge (negatively charged)</strong>, leaving a deficit of electrons—and thus a <strong>positive charge—on the top edge</strong>. This establishes the potential difference that generates the Hall Voltage!</p>

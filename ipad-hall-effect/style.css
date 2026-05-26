@@ -267,6 +267,88 @@ input[type=range]::-webkit-slider-runnable-track {
     pointer-events: auto;
 }
 
+/* Macroscopic PIP Panel */
+.pip-panel {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 240px;
+    height: 180px;
+    padding: 0;
+    overflow: hidden;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    background: transparent; /* center must be transparent for WebGL canvas underneath */
+    border: 1px solid var(--panel-border);
+    border-radius: 16px;
+}
+
+.pip-panel.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.pip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    background: var(--panel-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--panel-border);
+    z-index: 2; /* always on top of body mask */
+}
+
+.pip-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+    display: flex;
+    align-items: center;
+}
+
+.pip-status-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.pip-status-badge.success {
+    background: rgba(52, 199, 89, 0.12);
+    color: var(--success);
+}
+
+.pip-status-badge.warning {
+    background: rgba(255, 159, 10, 0.12);
+    color: var(--warning);
+}
+
+.pip-body {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 0 15px 15px; /* match container bottom corners */
+}
+
+/* PIP Canvas — true rounded corners via CSS clipping */
+#pip-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0 15px 15px;
+}
+
 .info-trigger-btn {
     display: flex;
     align-items: center;
@@ -686,5 +768,65 @@ input[type=range]::-webkit-slider-runnable-track {
         height: 34px;
         font-size: 1rem;
     }
+
+    /* PIP Panel Mobile Optimization */
+    .pip-panel {
+        top: 12px;
+        left: 12px;
+        width: 180px;
+        height: 140px;
+        border-radius: 12px;
+    }
+
+    .pip-header {
+        padding: 0.4rem 0.7rem;
+    }
+
+    .pip-title {
+        font-size: 0.7rem;
+    }
+
+    .pip-status-badge {
+        font-size: 0.55rem;
+        padding: 0.1rem 0.4rem;
+    }
+
+    .pip-body,
+    #pip-canvas {
+        border-radius: 0 0 11px 11px;
+    }
 }
 
+/* Ultra-small screens (iPhone SE, etc.) */
+@media (max-width: 420px) {
+    .pip-panel {
+        top: 8px;
+        left: 8px;
+        width: 140px;
+        height: 110px;
+        border-radius: 10px;
+    }
+
+    .pip-header {
+        padding: 0.3rem 0.5rem;
+    }
+
+    .pip-title {
+        font-size: 0.6rem;
+    }
+
+    .pip-title span:first-child {
+        display: none; /* hide Apple logo on tiny screens */
+    }
+
+    .pip-status-badge {
+        font-size: 0.5rem;
+        padding: 0.1rem 0.3rem;
+        border-radius: 6px;
+    }
+
+    .pip-body,
+    #pip-canvas {
+        border-radius: 0 0 9px 9px;
+    }
+}
