@@ -442,7 +442,7 @@ class EnhancedButtons {
   }
 
   setupRippleEffect() {
-    const buttons = document.querySelectorAll('.btn, .action-btn, .article-button');
+    const buttons = document.querySelectorAll('.btn:not(.no-ripple), .action-btn:not(.no-ripple), .article-button:not(.no-ripple)');
 
     buttons.forEach(button => {
       button.addEventListener('click', (e) => {

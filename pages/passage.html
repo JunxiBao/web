@@ -634,7 +634,7 @@
       <ul class="nav-menu" id="navMenu">
         <li><a href="home.html" data-i18n="nav.about">About Myself</a></li>
         <li><a href="passage.html" data-i18n="nav.articles">Articles</a></li>
-        <li><a href="https://github.com/junxibao">Github</a></li>
+        <li><a href="https://github.com/junxibao" target="_blank"><i data-lucide="github" style="width:16px;height:16px;margin-right:4px;vertical-align:-2px;"></i>Github</a></li>
         <li><a href="mailto:mail@junxibao.com@gmail.com" data-i18n="nav.email">Email</a></li>
       </ul>
     </div>
@@ -1365,7 +1365,7 @@
           localStorage.setItem('passageViewPreference', view);
         };
 
-        if (animate && document.startViewTransition) {
+        if (animate && document.startViewTransition && window.innerWidth > 768) {
           document.startViewTransition(() => updateDOM());
         } else {
           updateDOM();

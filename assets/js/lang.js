@@ -52,9 +52,10 @@
     },
 
     // Shared nav
-    "nav.about": { en: "About Myself", zh: "关于我" },
+    "nav.about": { en: "About", zh: "关于我" },
     "nav.articles": { en: "Articles", zh: "文章" },
-    "nav.email": { en: "Email", zh: "邮件" },
+    "nav.apps": { en: "Apps", zh: "应用中心" },
+    "nav.email": { en: "Email", zh: "邮件联系" },
 
     // Shared modals / buttons
     "modal.close": { en: "Close", zh: "关闭" },
@@ -111,8 +112,8 @@
 
     "home.apps.h2": { en: "APP INSTALLATION", zh: "应用安装" },
     "home.apps.subtitle": {
-      en: "Here you can download and access my two applications",
-      zh: "在这里，你可以下载并访问我的两款应用",
+      en: "Discover the software and tools I've built",
+      zh: "探索我开发的应用软件和实用工具",
     },
     "home.apps.btn": { en: "<i data-lucide='smartphone'></i> Open App List", zh: "<i data-lucide='smartphone'></i> 打开应用列表" },
     "home.apps.modal.title": { en: "Application list", zh: "应用列表" },
@@ -123,8 +124,18 @@
     },
     "home.apps.seasons.title": { en: "The Four Seasons", zh: "人间四季" },
     "home.apps.seasons.desc": {
-      en: 'One day, while walking with my mother, I heard that there was no good calendar software on the market. The one that came with Apple was too complicated and did not have the lunar calendar function. The third-party ones were either full of ads or required money. So, I made one myself using AI. To read more, click <a href="./articles/calendar.html">here</a>.',
-      zh: '有一天，我和妈妈散步时，听说市面上没有好用的日历软件。苹果自带的太复杂，也没有农历功能；第三方的要么广告满天飞，要么收费。于是，我用AI自己做了一个。更多详情，点击<a href="./articles/calendar.html">这里</a>。',
+      en: "One day, while walking with my mother, I heard that there was no good calendar software on the market. The one that came with Apple was too complicated and did not have the lunar calendar function. The third-party ones were either full of ads or required money. So, I made one myself using AI. To read more, click <a href='./articles/calendar.html'>here</a>.",
+      zh: "有一天跟妈妈散步，听见市面上没有好用的日历软件，苹果自带的太复杂还没用农历功能，第三方的满屏广告或者要钱。于是我自己用AI做了一个。点击<a href='./articles/calendar.html'>这里</a>阅读更多。",
+    },
+    "home.apps.easyagent.title": { en: "Easy Agent", zh: "Easy Agent" },
+    "home.apps.easyagent.desc": {
+      en: "A lightweight application that can connect to various AI Agents and be triggered via a global shortcut (Option+Space), powered by the ACP protocol. To read more, click <a href='./articles/AI_Agent_Apps.html'>here</a>.",
+      zh: "一个轻量级的全局快捷键（Option+空格）AI唤起工具，通过 ACP 协议接入本地或远端开源 Agent。点击<a href='./articles/AI_Agent_Apps.html'>这里</a>阅读更多。",
+    },
+    "home.apps.wechatautoreply.title": { en: "WeChatAutoReply", zh: "微信AI自动回复 (WeChatAutoReply)" },
+    "home.apps.wechatautoreply.desc": {
+      en: "A native macOS app utilizing the VoiceOver Accessibility Tree to monitor and auto-reply to WeChat messages safely and efficiently. To read more, click <a href='./articles/AI_Agent_Apps.html'>here</a>.",
+      zh: "基于 macOS 原生无障碍树（Accessibility API）开发的微信文本监控与 AI 自动回复工具，轻量高效防封号。点击<a href='./articles/AI_Agent_Apps.html'>这里</a>阅读更多。",
     },
 
     "home.cta.h2": {

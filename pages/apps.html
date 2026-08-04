@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="onion-location"
+    content="http://junxibao7eqtslsmrjdwz7kxjym5a66omxd43tew6vy3fcp34wzeueyd.onion/pages/apps.html" />
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png" />
+  <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+  <link rel="apple-touch-icon" href="../assets/images/favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="nav.apps">Apps - JunxiBao's Blog</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/lang.js"></script>
+  <link rel="stylesheet" href="../assets/css/geek-theme.css">
+  <link rel="stylesheet" href="../assets/css/geek-theme.css">
+  <link rel="stylesheet" href="../assets/css/passage.css">
+  <style>
+    /* Specific styles for apps page */
+    .app-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+    }
+    .theme-image-wrapper { position: relative; }
+    .theme-image-wrapper .dark-image { position: absolute; top: 0; left: 0; opacity: 0; }
+    html[data-theme="dark"] .theme-image-wrapper .dark-image { opacity: 1; }
+    html[data-theme="dark"] .theme-image-wrapper .light-image { opacity: 0; }
+    html[data-theme="dark"] .btn-icon { filter: invert(1); }
+    
+    .app-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 1.5rem;
+    }
+    .pill-btn {
+      border-radius: 999px;
+      padding: 0.4rem 1rem;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .pill-btn:hover {
+      background: var(--accent-green);
+      color: var(--bg-primary);
+      border-color: var(--accent-green);
+      transform: translateY(-2px);
+    }
+    .pill-btn i, .btn-icon {
+      width: 16px;
+      height: 16px;
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/css/cursor.css?v=20260417b">
+  <link rel="stylesheet" href="../assets/css/enhance.css">
+</head>
+
+<body>
+  <a href="javascript:history.back()" class="back-button" title="Back" style="position:fixed; top:20px; left:20px; font-size:24px; text-decoration:none; color:var(--text-primary); z-index:1000; width: 40px; height: 40px; display:flex; align-items:center; justify-content:center; background:var(--bg-secondary); border-radius:50%; border:1px solid var(--border-color); box-shadow:var(--shadow-sm); transition:all 0.2s ease;">
+    &#8592;
+  </a>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <h1 class="hero-title reveal" style="--d: .05s" data-i18n="nav.apps">Application list</h1>
+      <p class="hero-subtitle reveal" style="--d: .2s" data-i18n="home.apps.subtitle">Discover the software and tools I've built</p>
+    </section>
+
+    <!-- Apps Grid Section -->
+    <section class="articles-section" style="padding-top: 0;">
+      <div class="article-grid">
+        <!-- 紫癜精灵 -->
+        <article class="article-card reveal" style="--d: .1s">
+          <div class="article-icon theme-image-wrapper" style="width: 72px; height: 72px; margin-bottom: 1.5rem; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <img src="../assets/images/APPs/紫癜精灵_light.jpg" alt="紫癜精灵" class="app-image light-image">
+            <img src="../assets/images/APPs/紫癜精灵_dark.png" alt="紫癜精灵" class="app-image dark-image">
+          </div>
+          <div class="article-header">
+            <h3 class="article-title" data-i18n="home.apps.purpura.title">紫癜精灵 (Purpura Elf)</h3>
+          </div>
+          <p class="article-desc" style="color: var(--text-muted); line-height: 1.7; flex-grow: 1;" data-i18n="home.apps.purpura.desc">This software is a project I collaborated on with a classmate who suffers from purpura. It aims to track the disease through artificial intelligence so that purpura patients can have better health. To read more, click <a href="./articles/App_Making.html">here</a>.</p>
+          <div class="app-links">
+            <a class="pill-btn" href="https://apps.apple.com/cn/app/%E7%B4%AB%E7%99%9C%E7%B2%BE%E7%81%B5/id6749155721" target="_blank" rel="noopener"><img src="../assets/images/icons/apple.svg" class="btn-icon"> Apple</a>
+            <a class="pill-btn" href="https://appgallery.huawei.com/app/C116171217" target="_blank" rel="noopener"><img src="../assets/images/icons/huawei.svg" class="btn-icon"> Huawei</a>
+            <a class="pill-btn" href="https://zdelf.cn/share/app-release.apk" target="_blank" rel="noopener"><img src="../assets/images/icons/android.svg" class="btn-icon"> Android</a>
+            <a class="pill-btn" href="https://app.zdelf.cn" target="_blank" rel="noopener"><img src="../assets/images/icons/web.svg" class="btn-icon"> Web</a>
+          </div>
+        </article>
+
+        <!-- 人间四季 -->
+        <article class="article-card reveal" style="--d: .2s">
+          <div class="article-icon" style="width: 72px; height: 72px; margin-bottom: 1.5rem; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); background: var(--bg-primary);">
+            <img src="../assets/images/APPs/人间四季.png" alt="人间四季" class="app-image">
+          </div>
+          <div class="article-header">
+            <h3 class="article-title" data-i18n="home.apps.seasons.title">人间四季 (The Four Seasons)</h3>
+          </div>
+          <p class="article-desc" style="color: var(--text-muted); line-height: 1.7; flex-grow: 1;" data-i18n="home.apps.seasons.desc">One day, while walking with my mother, I heard that there was no good calendar software on the market. The one that came with Apple was too complicated and did not have the lunar calendar function. The third-party ones were either full of ads or required money. So, I made one myself using AI. To read more, click <a href="./articles/calendar.html">here</a>.</p>
+          <div class="app-links">
+            <a class="pill-btn" href="https://apps.apple.com/cn/app/%E4%BA%BA%E9%97%B4%E5%9B%9B%E5%AD%A3/id6751413350" target="_blank" rel="noopener"><img src="../assets/images/icons/apple.svg" class="btn-icon"> Apple</a>
+          </div>
+        </article>
+
+        <!-- Easy Agent -->
+        <article class="article-card reveal" style="--d: .3s">
+          <div class="article-icon" style="width: 72px; height: 72px; margin-bottom: 1.5rem; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); background: var(--bg-primary);">
+            <img src="../assets/images/APPs/Easyagent.png" alt="Easy Agent" class="app-image">
+          </div>
+          <div class="article-header">
+            <h3 class="article-title" data-i18n="home.apps.easyagent.title">Easy Agent</h3>
+          </div>
+          <p class="article-desc" style="color: var(--text-muted); line-height: 1.7; flex-grow: 1;" data-i18n="home.apps.easyagent.desc">A lightweight application that can connect to various AI Agents and be triggered via a global shortcut (Option+Space), powered by the ACP protocol. To read more, click <a href='./articles/AI_Agent_Apps.html'>here</a>.</p>
+          <div class="app-links">
+            <a class="pill-btn" href="https://github.com/JunxiBao/EasyAgent" target="_blank" rel="noopener"><img src="../assets/images/icons/github.svg" class="btn-icon"> GitHub</a>
+          </div>
+        </article>
+
+        <!-- WeChatAutoReply -->
+        <article class="article-card reveal" style="--d: .4s">
+          <div class="article-icon" style="width: 72px; height: 72px; margin-bottom: 1.5rem; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); background: var(--bg-primary);">
+            <img src="../assets/images/APPs/WeChat Auto Reply.png" alt="WeChatAutoReply" class="app-image">
+          </div>
+          <div class="article-header">
+            <h3 class="article-title" data-i18n="home.apps.wechatautoreply.title">WeChatAutoReply</h3>
+          </div>
+          <p class="article-desc" style="color: var(--text-muted); line-height: 1.7; flex-grow: 1;" data-i18n="home.apps.wechatautoreply.desc">A native macOS app utilizing the VoiceOver Accessibility Tree to monitor and auto-reply to WeChat messages safely and efficiently. To read more, click <a href='./articles/AI_Agent_Apps.html'>here</a>.</p>
+          <div class="app-links">
+            <a class="pill-btn" href="https://github.com/JunxiBao/WeChatAutoReply" target="_blank" rel="noopener"><img src="../assets/images/icons/github.svg" class="btn-icon"> GitHub</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script defer src="../assets/js/effects.js"></script>
+  <script defer src="../assets/js/geek-theme.js"></script>
+  <script defer src="../assets/js/cursor.js?v=20260417b"></script>
+  <script>
+    // Check dark mode
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    // Scroll reveal
+    document.addEventListener('DOMContentLoaded', () => {
+      const els = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(el => io.observe(el));
+    });
+  </script>
+  <!-- Initialize icons -->
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+  <script defer>
+    lucide.createIcons();
+  </script>
+</body>
+
+</html>

@@ -126,7 +126,7 @@
 
     .modal {
       width: min(900px, 100%);
-      max-height: 85vh;
+      max-height: 100%;
       background: var(--bg-primary);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -139,7 +139,6 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      max-height: 90dvh;
       margin-top: 0;
       will-change: transform, opacity;
       transform: translateZ(0);
@@ -206,84 +205,7 @@
       right: 1rem;
     }
 
-    .app-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-      padding-right: .25rem;
-      align-content: start;
-    }
-
-    .app-card {
-      background: var(--bg-secondary);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border-color);
-      border-radius: 15px;
-      padding: 1.25rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      transition: transform .25s ease, box-shadow .3s ease, border-color .3s ease;
-      height: auto;
-      will-change: transform;
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      contain: content;
-    }
-
-    .app-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent-green);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .app-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 12px;
-      pointer-events: none;
-      background: linear-gradient(135deg, rgba(34, 197, 94, .06), rgba(59, 130, 246, .04));
-      opacity: 1;
-    }
-
-    .app-title {
-      font-size: 1.25rem;
-      color: var(--accent-green);
-      margin-bottom: .5rem;
-    }
-
-    .app-desc {
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-    }
-
-    .app-links {
-      display: flex;
-      gap: .6rem;
-      flex-wrap: wrap;
-      row-gap: .5rem;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: .35rem .6rem;
-      border: 1px solid var(--border-color);
-      border-radius: 999px;
-      font-size: .85rem;
-      color: var(--text-muted);
-    }
-
     /* Ensure extra breathing space between header and app cards in Apps modal only */
-    #appsModal .modal-body {
-      padding-top: .9rem;
-    }
-
-    #appsModal .app-grid {
-      margin-top: 1.35rem;
-    }
 
     /* Skills modal styling - cleaner card layout */
     #skillModal .modal {
@@ -382,11 +304,7 @@
       }
 
       .modal {
-        max-height: 90vh;
-      }
-
-      .modal {
-        max-height: 92dvh;
+        max-height: 100%;
       }
 
       .modal-header {
@@ -479,9 +397,9 @@
       </button>
 
       <ul class="nav-menu" id="navMenu">
-        <li><a href="home.html" data-i18n="nav.about">About Myself</a></li>
+        <li><a href="home.html" data-i18n="nav.about" class="active">About Myself</a></li>
         <li><a href="passage.html" data-i18n="nav.articles">Articles</a></li>
-        <li><a href="https://github.com/junxibao">Github</a></li>
+        <li><a href="https://github.com/junxibao" target="_blank"><i data-lucide="github" style="width:16px;height:16px;margin-right:4px;vertical-align:-2px;"></i>Github</a></li>
         <li><a href="mailto:mail@junxibao.com@gmail.com" data-i18n="nav.email">Email</a></li>
       </ul>
     </div>
@@ -576,63 +494,11 @@
     <!-- Apps Section -->
     <section class="apps-section">
       <h2 class="reveal" style="--d: .05s; text-align:center" data-i18n="home.apps.h2">APP INSTALLATION</h2>
-      <p class="reveal" style="--d: .15s; text-align:center; color: var(--text-muted)" data-i18n="home.apps.subtitle">
-        Here you can download and access
-        my two applications</p>
+      <p class="reveal" style="--d: .15s; text-align:center; color: var(--text-muted)" data-i18n="home.apps.subtitle">Discover the software and tools I've built</p>
       <div class="apps-cta" style="text-align:center; margin-top:1.5rem;">
-        <button id="openAppsModal" class="btn reveal" style="--d: .25s" data-i18n="home.apps.btn"><i
-            data-lucide="smartphone"></i> Open App
-          List</button>
+        <a href="apps.html" class="btn no-ripple reveal" style="--d: .25s; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:0.5rem;" data-i18n="home.apps.btn"><i data-lucide="smartphone"></i> Open App List</a>
       </div>
     </section>
-
-    <!-- Apps Modal -->
-    <div id="appsModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
-      <div class="modal" role="document">
-        <div class="modal-header">
-          <h3 data-i18n="home.apps.modal.title">Application list</h3>
-          <button class="modal-close" data-i18n-aria-label="modal.close" aria-label="Close">×</button>
-        </div>
-        <div class="modal-body">
-          <div class="app-grid">
-            <!-- 紫癜精灵 -->
-            <div class="app-card">
-              <div class="app-title" data-i18n="home.apps.purpura.title">紫癜精灵 (Purpura Elf)</div>
-              <div class="app-desc" data-i18n="home.apps.purpura.desc">This software is a project I collaborated on with
-                a classmate who suffers from
-                purpura. It aims to track the disease
-                through artificial intelligence so that purpura patients can have better health. To read more, click <a
-                  href="./articles/App_Making.html">here</a>.</div>
-              <div class="app-intro"></div>
-              <div class="app-links">
-                <a class="btn" href="https://apps.apple.com/cn/app/%E7%B4%AB%E7%99%9C%E7%B2%BE%E7%81%B5/id6749155721"
-                  target="_blank" rel="noopener">Apple</a>
-                <a class="btn" href="https://zdelf.cn/share/app-release.apk" target="_blank" rel="noopener">Android</a>
-                <a class="btn" href="https://app.zdelf.cn" target="_blank" rel="noopener">Web</a>
-              </div>
-            </div>
-
-            <!-- 人间四季 -->
-            <div class="app-card">
-              <div class="app-title" data-i18n="home.apps.seasons.title">人间四季 (The Four Seasons)</div>
-              <div class="app-desc" data-i18n="home.apps.seasons.desc">One day, while walking with my mother, I heard
-                that there was no good calendar
-                software on the market. The one that came
-                with Apple was too complicated and did not have the lunar calendar function. The third-party ones were
-                either full of
-                ads or required money. So, I made one myself using AI. To read more, click <a
-                  href="./articles/calendar.html">here</a>.</div>
-              <div class="app-intro"></div>
-              <div class="app-links">
-                <a class="btn" href="https://apps.apple.com/cn/app/%E4%BA%BA%E9%97%B4%E5%9B%9B%E5%AD%A3/id6751413350"
-                  target="_blank" rel="noopener">Apple</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
     <!-- Site Uptime -->
     <section class="uptime-section reveal">
