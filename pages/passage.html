@@ -85,7 +85,6 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      animation: cardEnter 0.6s ease forwards;
       cursor: pointer;
     }
 
@@ -256,73 +255,6 @@
       color: var(--text-muted);
       pointer-events: none;
       opacity: .8;
-    }
-
-    /* Suggestions dropdown */
-    .search-suggestions {
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      right: 0;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
-      max-height: 320px;
-      overflow-y: auto;
-      display: none;
-      z-index: 9999;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity .18s ease, transform .18s ease;
-    }
-
-    .search-suggestions.visible {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .suggestion-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.75rem 1rem;
-      cursor: pointer;
-      transition: background .2s ease;
-      opacity: 0;
-      transform: translateY(6px);
-    }
-
-    .suggestion-item:hover {
-      background: var(--bg-tertiary);
-    }
-
-    .suggestion-item.in {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity .22s ease, transform .22s ease;
-    }
-
-    .suggestion-item.active {
-      background: color-mix(in oklab, var(--accent-green) 10%, transparent);
-    }
-
-    .suggestion-title {
-      color: var(--text-primary);
-      font-size: .95rem;
-      text-align: left;
-    }
-
-    .suggestion-meta {
-      display: inline-flex;
-      gap: .4rem;
-      flex-shrink: 0;
-    }
-
-    .suggestion-meta .article-tag {
-      border-color: var(--border-color);
     }
 
     /* One-time highlight on target card */
@@ -674,7 +606,6 @@
             data-i18n-placeholder="passage.search.placeholder"
             placeholder="Search articles by title, tag or description..." />
           <span class="spinner" aria-hidden="true"></span>
-          <div id="searchSuggestions" class="search-suggestions"></div>
         </div>
       </div>
       <div class="filter-controls-wrapper" style="display: flex; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 1rem; position: relative; z-index: 1;">
@@ -1099,10 +1030,8 @@
     const filterButtons = document.querySelectorAll('.filter-btn');
     const articleCards = document.querySelectorAll('.article-card');
     const searchInput = document.getElementById('articleSearchInput');
-    const suggestionsEl = document.getElementById('searchSuggestions');
     let currentCategory = (document.querySelector('.filter-btn.active')?.getAttribute('data-category')) || 'all';
     let searchQuery = '';
-    let activeIndex = -1;
 
     // === Auto statistics for total articles & unique categories ===
     (function () {
@@ -1170,82 +1099,6 @@
       isInitialRender = false;
     }
 
-    function buildSuggestions() {
-      if (!suggestionsEl) return;
-      const query = searchQuery.trim().toLowerCase();
-      suggestionsEl.innerHTML = '';
-      activeIndex = -1;
-
-      if (!query) {
-        suggestionsEl.classList.remove('visible');
-        return;
-      }
-
-      // Collect matches with same predicate as applyFilter's text match
-      const items = [];
-      articleCards.forEach(card => {
-        const titleEl = card.querySelector('.article-title');
-        const title = (titleEl?.textContent || '').trim();
-        const desc = (card.querySelector('.article-description')?.textContent || '').toLowerCase();
-        const tags = Array.from(card.querySelectorAll('.article-tag')).map(t => t.textContent.toLowerCase()).join(' ');
-        const text = `${title.toLowerCase()} ${desc} ${tags}`;
-
-        const raw = (card.dataset.category || '').toLowerCase();
-        const categories = raw.split(',').map(s => s.trim()).filter(Boolean);
-        const categoryMatch = currentCategory === 'all' || categories.includes(currentCategory);
-
-        if (categoryMatch && text.includes(query)) {
-          items.push({ title, categories, card });
-        }
-      });
-
-      // Limit results
-      const maxItems = 8;
-      items.slice(0, maxItems).forEach(({ title, categories, card }, idx) => {
-        const div = document.createElement('div');
-        div.className = 'suggestion-item';
-        const catChips = categories.map(c => `<span class="article-tag">${c}</span>`).join(' ');
-        div.innerHTML = `<span class="suggestion-title">${title}</span><span class="suggestion-meta">${catChips}</span>`;
-        div.addEventListener('click', () => {
-          // scroll into view and temporary highlight
-          suggestionsEl.classList.remove('visible');
-          searchInput.blur();
-          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          card.classList.add('highlight-once');
-          setTimeout(() => card.classList.remove('highlight-once'), 1300);
-        });
-        suggestionsEl.appendChild(div);
-        // staggered reveal per item
-        requestAnimationFrame(() => {
-          setTimeout(() => div.classList.add('in'), 30 + idx * 25);
-        });
-      });
-
-      suggestionsEl.classList.toggle('visible', items.length > 0);
-    }
-
-    function getSuggestionItems() {
-      return Array.from(suggestionsEl?.querySelectorAll('.suggestion-item') || []);
-    }
-
-    function updateActiveSuggestion(newIndex) {
-      const items = getSuggestionItems();
-      if (!items.length) return;
-      // clamp index
-      if (newIndex < 0) newIndex = items.length - 1;
-      if (newIndex >= items.length) newIndex = 0;
-      items.forEach((el, i) => el.classList.toggle('active', i === newIndex));
-      activeIndex = newIndex;
-      // ensure in view
-      const el = items[activeIndex];
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        const parent = suggestionsEl.getBoundingClientRect();
-        if (rect.top < parent.top) el.scrollIntoView({ block: 'nearest' });
-        if (rect.bottom > parent.bottom) el.scrollIntoView({ block: 'nearest' });
-      }
-    }
-
     filterButtons.forEach(button => {
       button.addEventListener('click', () => {
         if (button.classList.contains('active')) {
@@ -1275,36 +1128,8 @@
           if (box) box.classList.add('searching');
           searchQuery = e.target.value || '';
           applyFilter();
-          buildSuggestions();
           setTimeout(() => { if (box) box.classList.remove('searching'); }, 150);
         }, 180));
-        // hide on blur with delay to allow click
-        searchInput.addEventListener('blur', () => setTimeout(() => suggestionsEl?.classList.remove('visible'), 150));
-        searchInput.addEventListener('focus', () => buildSuggestions());
-
-        // keyboard navigation
-        searchInput.addEventListener('keydown', (e) => {
-          const items = getSuggestionItems();
-          const isOpen = suggestionsEl?.classList.contains('visible');
-          if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            if (!isOpen) { buildSuggestions(); }
-            updateActiveSuggestion(activeIndex + 1);
-          } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            if (!isOpen) { buildSuggestions(); }
-            updateActiveSuggestion(activeIndex - 1);
-          } else if (e.key === 'Enter') {
-            if (isOpen && items.length) {
-              e.preventDefault();
-              const index = activeIndex >= 0 ? activeIndex : 0;
-              const target = items[index];
-              target?.click();
-            }
-          } else if (e.key === 'Escape') {
-            suggestionsEl?.classList.remove('visible');
-          }
-        });
       }
     })();
 
