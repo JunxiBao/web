@@ -10,6 +10,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="page.title.home">Home - JunxiBao's Blog</title>
+  <link rel="preconnect" href="https://unpkg.com">
   <script src="../assets/js/theme.js"></script>
   <script src="../assets/js/lang.js"></script>
   <link rel="stylesheet" href="../assets/css/geek-theme.css">
@@ -59,15 +60,17 @@
       position: relative;
       overflow: hidden;
       border: 1.5px solid var(--border-color);
-      transition: transform .15s ease, border-color .3s ease, background .2s ease, color .2s ease;
+      box-shadow: var(--shadow-sm);
+      transition: transform .15s ease, box-shadow .2s ease, border-color .3s ease, background .2s ease, color .2s ease;
       will-change: transform;
       transform: translateZ(0);
       backface-visibility: hidden;
     }
 
     .btn:hover {
-      transform: translateY(-1px);
+      transform: translateY(-2px);
       border-color: var(--accent-green);
+      box-shadow: var(--shadow-md);
     }
 
     .btn:active {
@@ -75,11 +78,34 @@
     }
 
     /* === Apps section === */
+    #openAppsModal {
+      background: var(--bg-secondary);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 15px;
+      color: var(--accent-green);
+      padding: 1.5rem 3rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    #openAppsModal i {
+      color: var(--accent-green);
+      margin-right: 0.5rem;
+    }
+
+    #openAppsModal:hover {
+      border-color: var(--accent-green);
+      box-shadow: var(--shadow-lg);
+    }
+
     .apps-section {
       padding: 3rem 0;
-      background: var(--bg-secondary);
       margin: 3rem 0;
-      border-radius: 15px;
     }
 
     /* === Modal styles === */
@@ -102,10 +128,12 @@
       width: min(900px, 100%);
       max-height: 85vh;
       background: var(--bg-primary);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border-color);
       border-radius: 14px;
       padding: 1.5rem;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
+      box-shadow: var(--shadow-lg);
       position: relative;
       animation: modal-pop .18s ease-out;
       overflow: hidden;
@@ -188,13 +216,16 @@
     }
 
     .app-card {
-      background: var(--bg-tertiary);
+      background: var(--bg-secondary);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: 15px;
       padding: 1.25rem;
       position: relative;
       overflow: hidden;
-      transition: transform .25s ease, border-color .3s ease;
+      box-shadow: var(--shadow-md);
+      transition: transform .25s ease, box-shadow .3s ease, border-color .3s ease;
       height: auto;
       will-change: transform;
       transform: translateZ(0);
@@ -203,8 +234,9 @@
     }
 
     .app-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-5px);
       border-color: var(--accent-green);
+      box-shadow: var(--shadow-lg);
     }
 
     .app-card::before {
@@ -256,7 +288,7 @@
     /* Skills modal styling - cleaner card layout */
     #skillModal .modal {
       border-radius: 16px;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, .38);
+      box-shadow: var(--terminal-shadow);
     }
 
     #skillModal .modal-header {
@@ -964,12 +996,12 @@
       setInterval(tick, 1000);
     })();
   </script>
-  <script src="../assets/js/effects.js"></script>
-  <script src="../assets/js/geek-theme.js"></script>
-  <script src="../assets/js/cursor.js?v=20260417b"></script>
+  <script defer src="../assets/js/effects.js"></script>
+  <script defer src="../assets/js/geek-theme.js"></script>
+  <script defer src="../assets/js/cursor.js?v=20260417b"></script>
   <!-- Initialize icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+  <script defer>
     lucide.createIcons();
   </script>
 </body>

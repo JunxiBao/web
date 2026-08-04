@@ -153,9 +153,9 @@
       zh: "探索技术，分享见解，构建未来",
     },
 
-    "passage.stats.h2": { en: "Article Statistics", zh: "文章统计" },
+    "passage.stats.h2": { en: "Article Statistics", zh: "文章数据概览" },
     "passage.stats.total": { en: "Total Articles", zh: "文章总数" },
-    "passage.stats.categories": { en: "Categories", zh: "分类数量" },
+    "passage.stats.updated": { en: "Last Updated", zh: "最近更新" },
 
     "passage.filter.h3": { en: "Filter by Category", zh: "按分类筛选" },
     "passage.filter.all": { en: "All Articles", zh: "全部文章" },
@@ -167,6 +167,15 @@
       zh: "按标题、标签或描述搜索文章...",
     },
     "passage.article.read": { en: "Read Article →", zh: "阅读文章 →" },
+
+    "article.ai_agent_apps.title": {
+      en: "Building Two Apps with AI: Easy Agent & WeChatAutoReply",
+      zh: "通过 AI 编程开发的两款实用 APP：Easy Agent 与 WeChatAutoReply"
+    },
+    "article.ai_agent_apps.desc": {
+      en: "How I built Easy Agent to summon LLMs globally, and WeChatAutoReply using VoiceOver APIs, purely through AI programming.",
+      zh: "我是如何通过 AI 编程开发出支持全局快捷键唤起的 Easy Agent 以及基于原生无障碍树的微信自动回复工具的。"
+    },
 
     // Article titles & descriptions
     "article.obsidian.title": {

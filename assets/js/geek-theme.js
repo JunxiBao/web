@@ -33,37 +33,29 @@ class GeekTheme {
 
   init() {
     const canEffects = !(window.AppEffects && (window.AppEffects.isReduced() || !window.AppEffects.isEnabled()));
-    if (canEffects) this.setupGravityField();
+    if (canEffects) this.setupParticleNetwork();
     if (canEffects) this.setupScrollEffects();
     if (canEffects) this.setupTypingEffects();
     if (canEffects) this.setupGlitchEffects();
     if (canEffects) this.setupTerminalEffects();
   }
 
-  // Gravity Field Effect — interactive grid that deforms around the cursor
-  setupGravityField() {
-    if (document.getElementById('gravityFieldBg')) return;
+  // Particle Network Effect — floating particles that connect with lines
+  setupParticleNetwork() {
+    if (document.getElementById('particleNetworkBg')) return;
     const canvas = document.createElement('canvas');
-    canvas.id = 'gravityFieldBg';
+    canvas.id = 'particleNetworkBg';
     canvas.style.cssText = 'position:fixed;top:0;left:0;pointer-events:none;z-index:-1;';
     document.body.appendChild(canvas);
     const ctx = canvas.getContext('2d', { alpha: true });
 
-    // Grid configuration
-    const spacing = 40;          // distance between grid points
-    const influenceRadius = 180; // how far the mouse influence reaches
-    const pullStrength = 18;     // max displacement in px
-    const springBack = 0.08;     // how quickly points return (0-1)
-    const dotRadius = 1.2;       // base dot size
-
-    let cols = 0, rows = 0;
-    let gridOrigins = [];   // original positions {x,y}
-    let gridCurrent = [];   // current displaced positions {x,y}
-    let accentColor = '#00c768';
+    let particles = [];
+    const connectionDistance = 140;
+    const mouseConnectionDistance = 200;
     let mouseX = -9999, mouseY = -9999;
     let isOnPage = false;
+    let accentColor = '#00c768';
 
-    // Helper: parse hex/rgb to {r,g,b}
     const parseColor = (str) => {
       const el = document.createElement('div');
       el.style.color = str;
@@ -82,32 +74,28 @@ class GeekTheme {
       colorRGB = parseColor(accentColor);
     };
 
-    const buildGrid = () => {
+    const initParticles = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      cols = Math.floor(canvas.width / spacing) + 2;
-      rows = Math.floor(canvas.height / spacing) + 2;
-      const offsetX = (canvas.width - (cols - 1) * spacing) / 2;
-      const offsetY = (canvas.height - (rows - 1) * spacing) / 2;
-      gridOrigins = [];
-      gridCurrent = [];
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const ox = offsetX + c * spacing;
-          const oy = offsetY + r * spacing;
-          gridOrigins.push({ x: ox, y: oy });
-          gridCurrent.push({ x: ox, y: oy });
-        }
+      particles = [];
+      const num = Math.min(Math.floor((canvas.width * canvas.height) / 10000), 150);
+      for (let i = 0; i < num; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.5) * 1.2,
+          radius: Math.random() * 1.5 + 0.5
+        });
       }
     };
 
     syncColor();
-    buildGrid();
-    window.addEventListener('resize', GeekTheme.debounce(buildGrid, 250));
+    initParticles();
+    window.addEventListener('resize', GeekTheme.debounce(initParticles, 250));
     window.addEventListener('themechange', syncColor);
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncColor);
 
-    // Track mouse (we enable pointer-events temporarily on document, not canvas)
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
@@ -120,89 +108,76 @@ class GeekTheme {
     let animId;
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const total = gridOrigins.length;
-      const ir2 = influenceRadius * influenceRadius;
+      
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
 
-      // Update positions
-      for (let i = 0; i < total; i++) {
-        const orig = gridOrigins[i];
-        const cur = gridCurrent[i];
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${colorRGB.r},${colorRGB.g},${colorRGB.b},0.6)`;
+        ctx.fill();
 
         if (isOnPage) {
-          const dx = orig.x - mouseX;
-          const dy = orig.y - mouseY;
-          const dist2 = dx * dx + dy * dy;
-
-          if (dist2 < ir2 && dist2 > 0) {
-            const dist = Math.sqrt(dist2);
-            const force = (1 - dist / influenceRadius);
-            const pushX = (dx / dist) * force * pullStrength;
-            const pushY = (dy / dist) * force * pullStrength;
-            const targetX = orig.x + pushX;
-            const targetY = orig.y + pushY;
-            cur.x += (targetX - cur.x) * 0.15;
-            cur.y += (targetY - cur.y) * 0.15;
-          } else {
-            cur.x += (orig.x - cur.x) * springBack;
-            cur.y += (orig.y - cur.y) * springBack;
+          const dx = mouseX - p.x;
+          const dy = mouseY - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouseConnectionDistance) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouseX, mouseY);
+            ctx.strokeStyle = `rgba(${colorRGB.r},${colorRGB.g},${colorRGB.b},${0.35 * (1 - dist / mouseConnectionDistance)})`;
+            ctx.stroke();
+            
+            // Subtle attraction to cursor
+            p.x += dx * 0.005;
+            p.y += dy * 0.005;
           }
-        } else {
-          cur.x += (orig.x - cur.x) * springBack;
-          cur.y += (orig.y - cur.y) * springBack;
+        }
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < connectionDistance) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(${colorRGB.r},${colorRGB.g},${colorRGB.b},${0.15 * (1 - dist / connectionDistance)})`;
+            ctx.stroke();
+          }
         }
       }
-
-      // Draw horizontal lines
-      for (let r = 0; r < rows; r++) {
-        ctx.beginPath();
-        for (let c = 0; c < cols; c++) {
-          const idx = r * cols + c;
-          const p = gridCurrent[idx];
-          if (c === 0) ctx.moveTo(p.x, p.y);
-          else ctx.lineTo(p.x, p.y);
-        }
-        ctx.strokeStyle = `rgba(${colorRGB.r},${colorRGB.g},${colorRGB.b},0.08)`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-      }
-
-      // Draw vertical lines
-      for (let c = 0; c < cols; c++) {
-        ctx.beginPath();
-        for (let r = 0; r < rows; r++) {
-          const idx = r * cols + c;
-          const p = gridCurrent[idx];
-          if (r === 0) ctx.moveTo(p.x, p.y);
-          else ctx.lineTo(p.x, p.y);
-        }
-        ctx.strokeStyle = `rgba(${colorRGB.r},${colorRGB.g},${colorRGB.b},0.08)`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-      }
-
-      // Draw dots at grid intersections with proximity glow
-      for (let i = 0; i < total; i++) {
-        const p = gridCurrent[i];
-        const orig = gridOrigins[i];
-        const dispX = p.x - orig.x;
-        const dispY = p.y - orig.y;
-        const disp = Math.sqrt(dispX * dispX + dispY * dispY);
-        const intensity = Math.min(disp / pullStrength, 1);
-        const alpha = 0.12 + intensity * 0.6;
-        const radius = dotRadius + intensity * 2;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${colorRGB.r},${colorRGB.g},${colorRGB.b},${alpha})`;
-        ctx.fill();
-      }
-
       animId = requestAnimationFrame(draw);
     };
-    animId = requestAnimationFrame(draw);
+
+    let isCanvasVisible = true;
+    if ('IntersectionObserver' in window) {
+      const canvasObserver = new IntersectionObserver((entries) => {
+        isCanvasVisible = entries[0].isIntersecting;
+        if (isCanvasVisible && !document.hidden) {
+          if (!animId) animId = requestAnimationFrame(draw);
+        } else {
+          if (animId) { cancelAnimationFrame(animId); animId = null; }
+        }
+      }, { rootMargin: '200px' });
+      canvasObserver.observe(canvas);
+    } else {
+      animId = requestAnimationFrame(draw);
+    }
+
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) { cancelAnimationFrame(animId); }
-      else { animId = requestAnimationFrame(draw); }
+      if (document.hidden || !isCanvasVisible) { 
+        if (animId) { cancelAnimationFrame(animId); animId = null; }
+      } else {
+        if (!animId) animId = requestAnimationFrame(draw);
+      }
     });
   }
 
@@ -227,16 +202,17 @@ class GeekTheme {
     });
 
     // Parallax effect for hero sections
-    const onScroll = () => {
-      const scrolled = window.pageYOffset;
-      const parallaxElements = document.querySelectorAll('.hero-section, .article-hero');
-
-      parallaxElements.forEach(element => {
-        const speed = 0.5;
-        element.style.transform = `translateY(${scrolled * speed}px)`;
-      });
-    };
-    window.addEventListener('scroll', GeekTheme.throttle(onScroll, 16), { passive: true });
+    const parallaxElements = document.querySelectorAll('.hero-section, .article-hero');
+    if (parallaxElements.length > 0) {
+      const onScroll = () => {
+        const scrolled = window.pageYOffset;
+        parallaxElements.forEach(element => {
+          const speed = 0.5;
+          element.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+      };
+      window.addEventListener('scroll', GeekTheme.throttle(onScroll, 16), { passive: true });
+    }
   }
 
   // Typing Effects
@@ -386,11 +362,11 @@ class EnhancedNavigation {
     if (!this.nav) return;
 
     const handleScroll = GeekTheme.throttle(() => {
-      // Use CSS variables so manual theme overrides are respected
-      this.nav.style.background = 'var(--bg-secondary)';
-      this.nav.style.borderBottom = '2px solid var(--border-color)';
-      this.nav.style.backdropFilter = 'none';
-      this.nav.style.webkitBackdropFilter = 'none';
+      if (window.scrollY > 20) {
+        this.nav.style.boxShadow = 'var(--shadow-md)';
+      } else {
+        this.nav.style.boxShadow = 'var(--shadow-sm)';
+      }
     }, 16);
 
     window.addEventListener('scroll', handleScroll);

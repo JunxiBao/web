@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="onion-location" content="http://junxibao7eqtslsmrjdwz7kxjym5a66omxd43tew6vy3fcp34wzeueyd.onion/index.html" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building Two Apps with AI: Easy Agent & WeChatAutoReply</title>
+  <script src="../../assets/js/theme.js"></script>
+  <script src="../../assets/js/lang.js"></script>
+  <link rel="stylesheet" href="../../assets/css/template.css" />
+  <link rel="stylesheet" href="../../assets/css/cursor.css?v=20260417b" />
+  <link rel="icon" type="image/png" href="../../assets/images/favicon.png" />
+  <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
+  <link rel="apple-touch-icon" href="../../assets/images/favicon.png" />
+</head>
+
+<body>
+  <a href="javascript:history.back()" class="back-button" title="Back">
+    &#8592;
+  </a>
+  <div class="rainbow-border">
+    <div class="article-wrapper">
+      <article class="article-card">
+
+        <!-- English -->
+        <div class="lang-en">
+          <h1 class="article-title">Building Two Apps with AI: Easy Agent & WeChatAutoReply</h1>
+          <p class="article-date">Aug 04 2026</p>
+          <div class="article-content">
+            <h2>Table of Contents</h2>
+            <nav class="toc">
+              <ul>
+                <li><a href="#easy-agent">Easy Agent</a></li>
+                <li><a href="#wechatautoreply">WeChatAutoReply</a></li>
+              </ul>
+            </nav>
+            <p>AI Agents have been incredibly popular lately, with tools like OpenClaw and Hermes leading the charge. Having used these tools heavily for a while, I can genuinely say they are fantastic. They can directly control my computer to automate tedious tasks, such as organizing research materials and batch-processing files. However, as my reliance on AI Agents grew, I began to notice a few pain points and sparked some new ideas. So, I decided to build two apps myself through AI-assisted programming.</p>
+
+            <h2 id="easy-agent">Easy Agent</h2>
+            <p>On macOS, official AI apps like ChatGPT can be summoned globally using a simple keyboard shortcut (like <code>Option + Space</code>). It's incredibly convenient. But for powerful open-source agents like OpenClaw or Hermes Agent, you're usually restricted to running them in the terminal or a standalone desktop window, which feels a bit disjointed.</p>
+
+            <p>This gave me an idea: I wanted to build a lightweight application that could connect to various AI Agents and be triggered via a global shortcut, just like ChatGPT. Initially, I assumed there wasn't a universal protocol to achieve this, so I put the idea on hold. Later, while exploring Obsidian, I stumbled upon a plugin called Agent Client, which connects to agents using something called the ACP protocol! This protocol uses JSON to communicate between the frontend client and the agent backend. The user simply needs to input the agent's local address.</p>
+
+            <p>With this discovery, and with the help of AI, the development process went surprisingly smooth.</p>
+            <p><strong>Project repository:</strong> <a href="https://github.com/JunxiBao/EasyAgent" target="_blank">https://github.com/JunxiBao/EasyAgent</a></p>
+
+            <h2 id="wechatautoreply">WechatAutoReply</h2>
+            <p>The motivation behind this software was the current landscape of "AI WeChat auto-reply" solutions. Most methods available on the market either easily lead to account bans, or rely on AI vision to read the screen and simulate clicks. The latter approach is not only slow and high-latency, but the API cost for constant image recognition is also absurdly high. I wanted to find a more efficient and safer local solution.</p>
+
+            <p>Then I had a lightbulb moment: Apple devices have the "VoiceOver" accessibility feature that reads screen content out loud. This means the system layer must be able to read WeChat text messages directly! If so, could I write a software to read these messages natively, evaluate them, and let AI reply?</p>
+
+            <p>Guided by AI, I learned about macOS's native Accessibility API (Accessibility Tree). It can parse every UI element on the screen, including WeChat's text bubbles. The logic instantly clicked: I could have the software read all current messages in the chat window upon startup, and then continuously monitor for changes. Any newly appended text would be identified as a new message from the other person. The AI could then formulate an intelligent reply based on this captured context.</p>
+
+            <p>After searching the internet extensively, apart from an unrelated MCP, I couldn't find any ready-to-use, out-of-the-box solutions. So, once again with the help of AI, I built one myself from scratch. It works remarkably well!</p>
+            <p><strong>Project repository:</strong> <a href="https://github.com/JunxiBao/WeChatAutoReply" target="_blank">https://github.com/JunxiBao/WeChatAutoReply</a></p>
+          </div>
+        </div>
+
+        <!-- 中文 -->
+        <div class="lang-zh">
+          <h1 class="article-title">通过 AI 编程开发的两款实用 APP：Easy Agent 与 WeChatAutoReply</h1>
+          <p class="article-date">Aug 04 2026</p>
+          <div class="article-content">
+            <h2>目录</h2>
+            <nav class="toc">
+              <ul>
+                <li><a href="#easy-agent-zh">Easy Agent</a></li>
+                <li><a href="#wechatautoreply-zh">WeChatAutoReply</a></li>
+              </ul>
+            </nav>
+            <p>最近 AI Agent 真的非常火爆，比如 OpenClaw、Hermes 等等。我自己也深度使用了这些工具很长一段时间，感觉确实非常顺手。它们可以直接操纵我的电脑来完成不少繁琐的任务，比如整理资料、批量处理文件等。但随着我对 AI Agent 的依赖和使用量不断加大，我渐渐开始察觉到一些痛点，同时也产生了一些新的想法。于是，我决定借助 AI 编程，自己动手做两款 APP。</p>
+
+            <h2 id="easy-agent-zh">Easy Agent</h2>
+            <p>在 Mac 上，像 ChatGPT 这类官方 AI 客户端都可以直接通过快捷键（比如 <code>Option + 空格</code>）在任何地方全局唤起，这真的极其方便。但是对于 OpenClaw、Hermes Agent 这些强大的开源智能体软件，目前往往只能在终端或者独立的桌面端窗口使用，这就显得有些割裂和不便了。</p>
+
+            <p>于是我萌生了一个想法：我想自己做一个轻量级软件，可以像 ChatGPT 一样通过全局快捷键唤起，并且能够自由接入各个 AI Agent。起初，我以为目前可能还没有一种通用的协议能做到这点，所以一度搁置了开发计划。但后来，我在 Obsidian 里偶然发现了一个叫 Agent Client 的插件，它竟然是通过一个叫 ACP 的协议来接入 Agent 的！这个协议通过 JSON 格式让前端软件和 Agent 后端进行联络，用户只需要输入 Agent 运行的本地地址就可以了。</p>
+
+            <p>有了这个发现，在 AI 的帮助下我的开发过程异常顺利。</p>
+            <p><strong>项目开源地址：</strong> <a href="https://github.com/JunxiBao/EasyAgent" target="_blank">https://github.com/JunxiBao/EasyAgent</a></p>
+
+            <h2 id="wechatautoreply-zh">WechatAutoReply</h2>
+            <p>做这款软件的起因是，现在市面上大多数“AI 自动回复微信”的方案要么非常容易导致封号，要么是通过 AI 视觉识别屏幕图像再进行模拟点击操作。后者不仅速度慢、延迟高，而且每次识别图片的 API 成本也相当昂贵。我想找一个更高效、更安全的本地解决方案。</p>
+
+            <p>我突然灵机一动：苹果设备自带的“旁白（VoiceOver）”辅助功能可以朗读屏幕上的内容，那系统底层肯定是可以直接读取到微信文本消息的！既然如此，能不能让我的软件也从底层读取这些消息，然后判断并调用 AI 进行回复呢？</p>
+
+            <p>在 AI 的查阅和指导下，我了解到了 macOS 原生的“无障碍树（Accessibility API）”功能。它可以解析屏幕上的每一个 UI 元素，当然也包括微信的文字消息。思路瞬间打开：我可以让软件在启动时先读取当前聊天窗口里的所有消息，然后实时监控，只要前后对比多出了新的文本，那就是对方发送的新消息。随后，AI 就可以基于这些捕获到的上下文进行智能回复。</p>
+
+            <p>在网上找了一大圈之后，除了找到一个相关的 MCP 之外，我并没有发现什么好用的、开箱即用的成熟解决方案。于是，我又在 AI 的帮助下自己手搓了一个，目前实测效果相当不错！</p>
+            <p><strong>项目开源地址：</strong> <a href="https://github.com/JunxiBao/WeChatAutoReply" target="_blank">https://github.com/JunxiBao/WeChatAutoReply</a></p>
+          </div>
+        </div>
+
+      </article>
+    </div>
+  </div>
+  <script defer src="../../assets/js/cursor.js?v=20260417b"></script>
+  <script defer src="../../assets/js/effects.js"></script>
+</body>
+
+</html>
