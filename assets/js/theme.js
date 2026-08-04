@@ -104,14 +104,14 @@ document.addEventListener('click', function (e) {
 }, true);
 
 // Global progressive image loading:
-// 1) render low-res image first from assets/images/.lowres/
-// 2) after window load, swap to full-res source
+// Phase 1 (DOMContentLoaded): scan <img data-src> → set src to lowres (blur)
+// Phase 2 (after langready): IntersectionObserver → swap to full-res on demand
 (function () {
   var PREPARED_ATTR = 'data-progressive-prepared';
   var FULL_ATTR = 'data-fullres-src';
-  var LOW_ATTR = 'data-lowres-src';
   var OPT_OUT_ATTR = 'data-progressive-off';
-  var candidates = [];
+  // 1×1 transparent GIF as placeholder when no lowres exists
+  var PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
   function detectAssetPrefix() {
     var scripts = document.getElementsByTagName('script');
@@ -134,9 +134,10 @@ document.addEventListener('click', function (e) {
     var style = document.createElement('style');
     style.id = 'progressive-image-style';
     style.textContent = [
-      '.progressive-image{transition:filter .28s ease, opacity .28s ease;}',
-      '.progressive-image.is-lowres{filter:blur(10px);opacity:.92;}',
-      '.progressive-image.is-fullres{filter:none;opacity:1;}',
+      '.progressive-image{transition:filter .4s ease, opacity .4s ease;}',
+      '.progressive-image.is-lowres{filter:blur(12px);opacity:.88;transform:scale(1.02);}',
+      '.progressive-image.is-fullres{filter:none;opacity:1;transform:scale(1);}',
+      'img[data-src]:not([src]){min-height:60px;background:var(--bg-tertiary,#1e1e21);}',
     ].join('\n');
     document.head.appendChild(style);
   }
@@ -149,26 +150,11 @@ document.addEventListener('click', function (e) {
     }
   }
 
-  function shouldHandle(img) {
-    if (!img) return false;
-    if (img.getAttribute(PREPARED_ATTR) === '1') return false;
-    if (img.getAttribute(OPT_OUT_ATTR) === '1') return false;
-
-    var raw = img.getAttribute('src');
-    if (!raw || /^(data:|blob:)/i.test(raw)) return false;
-
-    var parsed = normalizeURL(raw);
-    if (!parsed) return false;
-    if (parsed.origin !== window.location.origin) return false;
-    if (parsed.pathname.indexOf(BASE) !== 0) return false;
-    if (parsed.pathname.indexOf(LOWRES_BASE) === 0) return false;
-
-    return true;
-  }
-
   function toLowresURL(fullURL) {
     var parsed = normalizeURL(fullURL);
     if (!parsed || parsed.pathname.indexOf(BASE) !== 0) return null;
+    // Skip if already a lowres URL
+    if (parsed.pathname.indexOf(LOWRES_BASE) === 0) return null;
     parsed.pathname = LOWRES_BASE + parsed.pathname.slice(BASE.length);
     return parsed.toString();
   }
@@ -183,33 +169,68 @@ document.addEventListener('click', function (e) {
     img.classList.remove('is-lowres');
   }
 
-  function prepareImage(img) {
-    if (!shouldHandle(img)) return;
+  // ─── Phase 1: Prepare images (lowres or placeholder) ────────────────────────
+  // Handles both new data-src images and legacy src images
+  var preparedImages = [];
 
-    var fullURL = normalizeURL(img.getAttribute('src'));
+  function prepareImage(img) {
+    if (!img) return;
+    if (img.getAttribute(PREPARED_ATTR) === '1') return;
+    if (img.getAttribute(OPT_OUT_ATTR) === '1') return;
+
+    // Determine the full-res URL from data-src or src
+    var dataSrc = img.getAttribute('data-src');
+    var rawSrc = img.getAttribute('src');
+    var fullURL = null;
+
+    if (dataSrc) {
+      // New pattern: <img data-src="...">
+      fullURL = normalizeURL(dataSrc);
+    } else if (rawSrc && !/^(data:|blob:)/i.test(rawSrc)) {
+      // Legacy pattern: <img src="..."> (backward compatible)
+      var parsed = normalizeURL(rawSrc);
+      if (parsed && parsed.origin === window.location.origin && parsed.pathname.indexOf(BASE) === 0 && parsed.pathname.indexOf(LOWRES_BASE) !== 0) {
+        fullURL = parsed;
+      }
+    }
+
     if (!fullURL) return;
 
     var lowURL = toLowresURL(fullURL.toString());
-    if (!lowURL) return;
 
     img.setAttribute(PREPARED_ATTR, '1');
     img.setAttribute(FULL_ATTR, fullURL.toString());
-    img.setAttribute(LOW_ATTR, lowURL);
     img.decoding = 'async';
-    markLow(img);
 
-    // If low-res file is missing, fail fast to full-res.
-    var onLowError = function () {
-      img.removeEventListener('error', onLowError);
-      img.src = fullURL.toString();
-      markFull(img);
-    };
-    img.addEventListener('error', onLowError);
+    if (lowURL) {
+      // Set src to lowres — browser downloads tiny image
+      markLow(img);
 
-    img.src = lowURL;
-    candidates.push(img);
+      var onLowError = function () {
+        img.removeEventListener('error', onLowError);
+        // Lowres missing — use placeholder, will load full-res in Phase 2
+        img.src = PLACEHOLDER;
+      };
+      img.addEventListener('error', onLowError);
+      img.src = lowURL;
+    } else {
+      // No lowres available — use placeholder
+      img.src = PLACEHOLDER;
+    }
+
+    preparedImages.push(img);
   }
 
+  function prepareAllInDOM() {
+    // Handle new data-src images
+    var dataSrcImgs = document.querySelectorAll('img[data-src]');
+    dataSrcImgs.forEach(prepareImage);
+    // Handle legacy src images (backward compatible)
+    var srcImgs = document.querySelectorAll('img[src]');
+    srcImgs.forEach(prepareImage);
+  }
+
+  // ─── Phase 2: On-demand full-res loading via IntersectionObserver ───────────
   function swapToFull(img) {
     if (!img || !img.isConnected) return;
     var fullURL = img.getAttribute(FULL_ATTR);
@@ -243,25 +264,58 @@ document.addEventListener('click', function (e) {
     }
   }
 
-  function prepareAllInDOM() {
-    var imgs = document.querySelectorAll('img[src]');
-    imgs.forEach(prepareImage);
+  function startIntersectionLoading() {
+    if (!preparedImages.length) return;
+
+    // Use IntersectionObserver for on-demand loading
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            swapToFull(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        // Start loading when image is within 200px of viewport
+        rootMargin: '200px 0px'
+      });
+
+      preparedImages.forEach(function (img) {
+        observer.observe(img);
+      });
+    } else {
+      // Fallback: load all images sequentially
+      preparedImages.forEach(swapToFull);
+    }
   }
 
-  function swapAllToFull() {
-    candidates.forEach(swapToFull);
+  function startLoadingAfterLang() {
+    // Use requestIdleCallback if available, otherwise setTimeout
+    var scheduleLoad = window.requestIdleCallback || function (fn) { setTimeout(fn, 50); };
+    scheduleLoad(startIntersectionLoading);
   }
 
+  // ─── Bootstrap ──────────────────────────────────────────────────────────────
   injectStyles();
 
+  // Phase 1: prepare images as soon as DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', prepareAllInDOM, { once: true });
   } else {
     prepareAllInDOM();
   }
 
-  // Respect user requirement: load high-res only after full page load.
-  window.addEventListener('load', function () {
-    swapAllToFull();
-  }, { once: true });
+  // Phase 2: wait for translations, then start on-demand loading
+  if (window.__langReady) {
+    // Translations already done (e.g., script loaded late)
+    startLoadingAfterLang();
+  } else {
+    // Wait for langready event
+    window.addEventListener('langready', startLoadingAfterLang, { once: true });
+    // Safety net: if langready never fires (e.g., lang.js missing), start after 800ms
+    setTimeout(function () {
+      if (!window.__langReady) startLoadingAfterLang();
+    }, 800);
+  }
 })();

@@ -413,6 +413,10 @@
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
       window.lucide.createIcons();
     }
+
+    // Signal that translations are ready — image loading can begin
+    window.__langReady = true;
+    window.dispatchEvent(new CustomEvent('langready'));
   }
 
   // ─── Public API ───────────────────────────────────────────────────────────────
