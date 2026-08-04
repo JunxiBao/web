@@ -160,6 +160,7 @@
         entries.forEach(e => {
           if (e.isIntersecting) {
             e.target.classList.add('in');
+            setTimeout(() => e.target.classList.remove('reveal', 'in'), 1500);
             io.unobserve(e.target);
           }
         });

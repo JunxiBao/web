@@ -105,9 +105,8 @@
 /* Page fade-in and reveal */
 body { opacity: 0; animation: page-fade-in .6s ease both; }
 @keyframes page-fade-in { from { opacity: 0 } to { opacity: 1 } }
-.reveal { opacity: 0; }
-.reveal.in { opacity: 1; animation: reveal-anim .8s ease backwards; animation-delay: var(--d, 0s); }
-@keyframes reveal-anim { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(24px); }
+.reveal.in { opacity: 1; transform: translateY(0); transition: opacity .8s ease, transform .8s ease; transition-delay: var(--d, 0s); }
 
 /* Nav link underline */
 .nav-menu a { position: relative; display: inline-block; overflow: hidden; text-decoration: none; }

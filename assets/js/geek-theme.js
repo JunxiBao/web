@@ -192,12 +192,16 @@ class GeekTheme {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-in');
+          entry.target.addEventListener('animationend', () => {
+            entry.target.classList.remove('animate-in');
+          }, { once: true });
+          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    // Observe all cards and sections (排除reveal的skill-card)
-    document.querySelectorAll('.card, .article-card, .skill-card:not(.reveal), .terminal-window').forEach(el => {
+    // Observe all cards and sections (排除有reveal类的元素，避免动画冲突)
+    document.querySelectorAll('.card, .article-card:not(.reveal), .skill-card:not(.reveal), .terminal-window:not(.reveal)').forEach(el => {
       observer.observe(el);
     });
 
@@ -642,7 +646,7 @@ style.textContent = `
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
   }
 

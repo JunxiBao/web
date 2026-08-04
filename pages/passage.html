@@ -1064,7 +1064,13 @@
       if (!enable) return;
       const els = document.querySelectorAll('.reveal');
       const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        entries.forEach(e => { 
+          if (e.isIntersecting) { 
+            e.target.classList.add('in'); 
+            setTimeout(() => e.target.classList.remove('reveal', 'in'), 2500);
+            io.unobserve(e.target); 
+          } 
+        });
       }, { threshold: 0.12 });
       els.forEach(el => io.observe(el));
     })();
@@ -1132,6 +1138,7 @@
       window.addEventListener('langchange', updateDateDisplay);
     })();
 
+    let isInitialRender = true;
     function applyFilter() {
       const query = searchQuery.trim().toLowerCase();
       articleCards.forEach(card => {
@@ -1149,12 +1156,18 @@
         const match = categoryMatch && textMatch;
         if (match) {
           card.style.display = 'block';
-          card.style.animation = 'fadeIn 0.4s ease forwards';
+          if (!isInitialRender) {
+            card.style.animation = 'none';
+            card.offsetHeight; // trigger reflow
+            card.style.animation = 'fadeIn 0.4s ease';
+            setTimeout(() => { card.style.animation = ''; }, 450);
+          }
         } else {
           card.style.display = 'none';
           card.style.animation = '';
         }
       });
+      isInitialRender = false;
     }
 
     function buildSuggestions() {

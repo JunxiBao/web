@@ -545,6 +545,7 @@
         entries.forEach(e => {
           if (e.isIntersecting) {
             e.target.classList.add('in');
+            setTimeout(() => e.target.classList.remove('reveal', 'in'), 1500);
             io.unobserve(e.target);
           }
         });
@@ -594,6 +595,7 @@
               '<div class="section">',
               '<div class="section-title">Related articles</div>',
               '<div class="related-list">',
+              '<a class="related-link" href="./articles/AI_Agent_Apps.html"><i data-lucide="smartphone"></i> Building Two Apps with AI: Easy Agent & WeChatAutoReply</a>',
               '<a class="related-link" href="./articles/CTB_National_Championship.html"><i data-lucide="trophy"></i> National Championship: A Thrilling Journey from Code to Podium</a>',
               '<a class="related-link" href="./articles/App_Making.html"><i data-lucide="smartphone"></i> The process of me making an app</a>',
               '<a class="related-link" href="./articles/App_Making_2.html"><i data-lucide="smartphone"></i> The process of me making an app 2</a>',
@@ -614,6 +616,7 @@
               '<div class="section">',
               '<div class="section-title">相关文章</div>',
               '<div class="related-list">',
+              '<a class="related-link" href="./articles/AI_Agent_Apps.html"><i data-lucide="smartphone"></i> 通过 AI 编程开发的两款实用 APP：Easy Agent 与 WeChatAutoReply</a>',
               '<a class="related-link" href="./articles/CTB_National_Championship.html"><i data-lucide="trophy"></i> CTB全国赛摘金记：从代码到领奖台的惊险之旅</a>',
               '<a class="related-link" href="./articles/App_Making.html"><i data-lucide="smartphone"></i> 我制作应用的过程</a>',
               '<a class="related-link" href="./articles/App_Making_2.html"><i data-lucide="smartphone"></i> 我制作应用的过程 2</a>',
