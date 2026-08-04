@@ -1160,7 +1160,7 @@
             card.style.animation = 'none';
             card.offsetHeight; // trigger reflow
             card.style.animation = 'fadeIn 0.4s ease';
-            setTimeout(() => { card.style.animation = ''; }, 450);
+            setTimeout(() => { card.style.animation = 'none'; }, 450);
           }
         } else {
           card.style.display = 'none';
