@@ -196,6 +196,16 @@ document.addEventListener('click', function (e) {
 
     if (!fullURL) return;
 
+    // Skip SVGs or tiny icons from progressive loading to speed up UI rendering
+    var fullPath = fullURL.pathname;
+    if (/\.svg$/i.test(fullPath) || fullPath.indexOf('/icons/') !== -1) {
+      img.setAttribute(PREPARED_ATTR, '1');
+      if (dataSrc && !img.getAttribute('src')) {
+        img.src = dataSrc;
+      }
+      return;
+    }
+
     var lowURL = toLowresURL(fullURL.toString());
 
     img.setAttribute(PREPARED_ATTR, '1');

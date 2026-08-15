@@ -10,7 +10,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="nav.apps">Apps - JunxiBao's Blog</title>
-  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <script src="../assets/js/theme.js"></script>
   <script src="../assets/js/lang.js"></script>
   <link rel="stylesheet" href="../assets/css/geek-theme.css">
@@ -170,8 +173,10 @@
   </script>
   <!-- Initialize icons -->
   <script defer src="https://unpkg.com/lucide@latest"></script>
-  <script defer>
-    lucide.createIcons();
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.lucide) lucide.createIcons();
+    });
   </script>
 </body>
 

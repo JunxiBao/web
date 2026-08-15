@@ -10,7 +10,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="page.title.home">Home - JunxiBao's Blog</title>
-  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <script src="../assets/js/theme.js"></script>
   <script src="../assets/js/lang.js"></script>
   <link rel="stylesheet" href="../assets/css/geek-theme.css">
@@ -400,7 +403,7 @@
         <li><a href="home.html" data-i18n="nav.about" class="active">About Myself</a></li>
         <li><a href="passage.html" data-i18n="nav.articles">Articles</a></li>
         <li><a href="https://github.com/junxibao" target="_blank"><i data-lucide="github" style="width:16px;height:16px;margin-right:4px;vertical-align:-2px;"></i>Github</a></li>
-        <li><a href="mailto:mail@junxibao.com@gmail.com" data-i18n="nav.email">Email</a></li>
+        <li><a href="mailto:mail@junxibao.com" data-i18n="nav.email">Email</a></li>
       </ul>
     </div>
   </nav>
@@ -870,8 +873,10 @@
   <script defer src="../assets/js/cursor.js?v=20260417b"></script>
   <!-- Initialize icons -->
   <script defer src="https://unpkg.com/lucide@latest"></script>
-  <script defer>
-    lucide.createIcons();
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.lucide) lucide.createIcons();
+    });
   </script>
 </body>
 

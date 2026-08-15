@@ -97,6 +97,8 @@ body {
   font-weight: 500;
   color: var(--accent-blue, #2563eb);
   transition: color .2s ease, transform .2s ease;
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .article-content a::after,

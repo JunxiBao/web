@@ -10,7 +10,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="page.title.articles">Articles - JunxiBao's Blog</title>
-  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <script src="../assets/js/theme.js"></script>
   <script src="../assets/js/lang.js"></script>
   <link rel="stylesheet" href="../assets/css/geek-theme.css">
@@ -18,23 +21,6 @@
   <link rel="stylesheet" href="../assets/css/cursor.css?v=20260417b">
   <link rel="stylesheet" href="../assets/css/enhance.css">
   <style>
-    .hero-section {
-      text-align: center;
-      padding: 4rem 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(45deg, rgba(34, 197, 94, 0.05), rgba(59, 130, 246, 0.05));
-      z-index: -1;
-    }
 
     .hero-title {
       font-size: 3.5rem;
@@ -567,7 +553,7 @@
         <li><a href="home.html" data-i18n="nav.about">About Myself</a></li>
         <li><a href="passage.html" data-i18n="nav.articles">Articles</a></li>
         <li><a href="https://github.com/junxibao" target="_blank"><i data-lucide="github" style="width:16px;height:16px;margin-right:4px;vertical-align:-2px;"></i>Github</a></li>
-        <li><a href="mailto:mail@junxibao.com@gmail.com" data-i18n="nav.email">Email</a></li>
+        <li><a href="mailto:mail@junxibao.com" data-i18n="nav.email">Email</a></li>
       </ul>
     </div>
   </nav>
@@ -1203,7 +1189,7 @@
           localStorage.setItem('passageViewPreference', view);
         };
 
-        if (animate && document.startViewTransition && window.innerWidth > 768) {
+        if (animate && document.startViewTransition) {
           document.startViewTransition(() => updateDOM());
         } else {
           updateDOM();
@@ -1239,9 +1225,11 @@
     })();
   </script>
   <!-- Initialize icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script defer src="https://unpkg.com/lucide@latest"></script>
   <script>
-    lucide.createIcons();
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.lucide) lucide.createIcons();
+    });
   </script>
 </body>
 

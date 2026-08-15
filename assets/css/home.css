@@ -4,18 +4,39 @@
   text-align: center;
   padding: 4rem 0;
   position: relative;
-  overflow: hidden;
 }
 
 .hero-section::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: -150px;
+  bottom: -150px;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, rgba(34, 197, 94, 0.05), rgba(59, 130, 246, 0.05));
+  background: radial-gradient(
+    ellipse at center,
+    rgba(34, 197, 94, 0.09) 0%,
+    rgba(100, 200, 160, 0.06) 40%,
+    transparent 70%
+  );
   z-index: -1;
+  pointer-events: none;
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: -100px;
+  bottom: -100px;
+  left: 0;
+  right: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(120, 180, 255, 0.06) 0%,
+    transparent 65%
+  );
+  z-index: -1;
+  pointer-events: none;
 }
 
 .hero-title {
@@ -79,6 +100,16 @@
 
 .apps-section { padding: 3rem 0; margin: 3rem 0; }
 .apps-cta { text-align:center; margin-top:1.5rem; }
+.apps-cta .btn {
+  background: var(--bg-secondary);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.apps-cta .btn:hover {
+  background: var(--accent-green);
+  color: var(--bg-primary);
+  border-color: var(--accent-green);
+}
 
 .cta-section { text-align: center; padding: 3rem 0; }
 .cta-buttons { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
