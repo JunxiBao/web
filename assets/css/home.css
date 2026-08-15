@@ -91,9 +91,9 @@
 
 .skills-section { padding: 3rem 0; margin: 3rem 0; }
 .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 800px; margin: 0 auto; }
-.skill-card { background: var(--bg-secondary); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 15px; padding: 1.5rem; text-align: center; position: relative; overflow: hidden; box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; will-change: transform, box-shadow; }
+.skill-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 15px; padding: 1.5rem; text-align: center; position: relative; overflow: hidden; transition: transform 0.3s ease, border-color 0.3s ease; will-change: transform; }
 
-.skill-card:hover { transform: translateY(-5px); border-color: var(--accent-green); box-shadow: var(--shadow-lg); }
+.skill-card:hover { transform: translateY(-3px); border-color: var(--accent-green); }
 .skill-icon { font-size: 2.5rem; margin-bottom: 1rem; animation: floatY 7s ease-in-out infinite; }
 .skill-name { font-size: 1.2rem; color: var(--accent-green); margin-bottom: 0.5rem; }
 .skill-description { color: var(--text-muted); font-size: 0.9rem; }
@@ -102,8 +102,6 @@
 .apps-cta { text-align:center; margin-top:1.5rem; }
 .apps-cta .btn {
   background: var(--bg-secondary);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 .apps-cta .btn:hover {
   background: var(--accent-green);
@@ -117,16 +115,16 @@
 /* Modal */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; align-items: flex-start; justify-content: center; z-index: 999; padding: clamp(16px, env(safe-area-inset-top) + 72px, 96px) 1rem 1rem; }
 .modal-backdrop.show { display: flex; }
-.modal { width: min(900px, 100%); max-height: 85vh; background: var(--bg-primary); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.5rem; box-shadow: var(--shadow-lg); position: relative; animation: modal-pop .18s ease-out; overflow: hidden; display: flex; flex-direction: column; max-height: 90dvh; margin-top: 0; }
+.modal { width: min(900px, 100%); max-height: 85vh; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.5rem; position: relative; animation: modal-pop .18s ease-out; overflow: hidden; display: flex; flex-direction: column; max-height: 90dvh; margin-top: 0; }
 .modal-body { flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; padding: 0 .25rem .75rem; }
 @keyframes modal-pop { from { transform: translateY(6px) scale(.98); opacity: .6 } to { transform: translateY(0) scale(1); opacity: 1 } }
 .modal-close { position: absolute; top: .9rem; right: 1rem; border: none; background: transparent; font-size: 1.6rem; line-height: 1; color: var(--text-muted); cursor: pointer; }
 .modal-close:hover { color: var(--accent-green); }
-.modal-header { position: sticky; top: 0; display: flex; align-items: center; justify-content: center; gap: .5rem; background: var(--bg-primary); margin: -1.5rem -1.5rem 0 -1.5rem; padding: 1rem 2.25rem; border-bottom: 1px solid var(--border-color); z-index: 1; }
+.modal-header { position: sticky; top: 0; display: flex; align-items: center; justify-content: center; gap: .5rem; background: var(--bg-secondary); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); margin: -1.5rem -1.5rem 0 -1.5rem; padding: 1rem 2.25rem; border-bottom: 1px solid var(--border-color); z-index: 1; }
 .modal-header h3 { margin: 0; text-align: center; font-size: 1.15rem; }
 .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1rem; padding-right: .25rem; align-content: start; }
-.app-card { background: var(--bg-secondary); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 15px; padding: 1.25rem; position: relative; overflow: hidden; box-shadow: var(--shadow-md); transition: transform .3s ease, box-shadow 0.3s ease, border-color .3s ease; height: auto; }
-.app-card:hover { transform: translateY(-5px); border-color: var(--accent-green); box-shadow: var(--shadow-lg); }
+.app-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 15px; padding: 1.25rem; position: relative; overflow: hidden; transition: transform .3s ease, border-color .3s ease; height: auto; }
+.app-card:hover { transform: translateY(-3px); border-color: var(--accent-green); }
 .app-card::before { content: ''; position: absolute; inset: 0; border-radius: 12px; pointer-events: none; background: linear-gradient(135deg, rgba(34,197,94,.06), rgba(59,130,246,.04)); opacity: 1; }
 .app-title { font-size: 1.25rem; color: var(--accent-green); margin-bottom: .5rem; font-weight: 700; letter-spacing: .2px; }
 .app-desc { color: var(--text-muted); margin-bottom: 1rem; font-size: .98rem; }
