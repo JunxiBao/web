@@ -115,12 +115,12 @@
 /* Modal */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; align-items: flex-start; justify-content: center; z-index: 999; padding: clamp(16px, env(safe-area-inset-top) + 72px, 96px) 1rem 1rem; }
 .modal-backdrop.show { display: flex; }
-.modal { width: min(900px, 100%); max-height: 85vh; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.5rem; position: relative; animation: modal-pop .18s ease-out; overflow: hidden; display: flex; flex-direction: column; max-height: 90dvh; margin-top: 0; }
+.modal { width: min(900px, 100%); max-height: 85vh; background: var(--bg-secondary); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.5rem; position: relative; animation: modal-pop .18s ease-out; overflow: hidden; display: flex; flex-direction: column; max-height: 90dvh; margin-top: 0; }
 .modal-body { flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; padding: 0 .25rem .75rem; }
 @keyframes modal-pop { from { transform: translateY(6px) scale(.98); opacity: .6 } to { transform: translateY(0) scale(1); opacity: 1 } }
 .modal-close { position: absolute; top: .9rem; right: 1rem; border: none; background: transparent; font-size: 1.6rem; line-height: 1; color: var(--text-muted); cursor: pointer; }
 .modal-close:hover { color: var(--accent-green); }
-.modal-header { position: sticky; top: 0; display: flex; align-items: center; justify-content: center; gap: .5rem; background: var(--bg-secondary); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); margin: -1.5rem -1.5rem 0 -1.5rem; padding: 1rem 2.25rem; border-bottom: 1px solid var(--border-color); z-index: 1; }
+.modal-header { display: flex; align-items: center; justify-content: center; gap: .5rem; background: transparent; padding-bottom: 0.75rem; margin-bottom: 0.5rem; z-index: 1; }
 .modal-header h3 { margin: 0; text-align: center; font-size: 1.15rem; }
 .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1rem; padding-right: .25rem; align-content: start; }
 .app-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 15px; padding: 1.25rem; position: relative; overflow: hidden; transition: transform .3s ease, border-color .3s ease; height: auto; }
